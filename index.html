@@ -7,17 +7,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Barlow:wght@300;400;500;600&family=Barlow+Condensed:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
 <style>
-/* ═══════════════════════════════════════════════════════════
-   RESET
-═══════════════════════════════════════════════════════════ */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{font-size:16px;scroll-behavior:smooth}
 
-/* ═══════════════════════════════════════════════════════════
-   DESIGN TOKENS
-═══════════════════════════════════════════════════════════ */
 :root{
-  /* palette — dark editorial */
   --bg:       #0d0c0a;
   --surface:  #161411;
   --surface2: #1f1c18;
@@ -28,11 +21,9 @@ html{font-size:16px;scroll-behavior:smooth}
   --gold:     #c8923a;
   --gold-lt:  #e8b060;
   --gold-pale:#2a2218;
-  /* type */
   --serif:    'Libre Baskerville', Georgia, serif;
   --sans:     'Barlow', sans-serif;
   --cond:     'Barlow Condensed', sans-serif;
-  /* motion */
   --ease:     cubic-bezier(0.4,0,0.2,1);
   --ease-out: cubic-bezier(0,0,0.2,1);
 }
@@ -45,18 +36,13 @@ body{
   overflow-x:hidden;
 }
 
-/* ═══════════════════════════════════════════════════════════
-   NOISE GRAIN OVERLAY
-═══════════════════════════════════════════════════════════ */
 body::after{
   content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;
   opacity:.025;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
 }
 
-/* ═══════════════════════════════════════════════════════════
-   TRANSITION WIPE
-═══════════════════════════════════════════════════════════ */
+/* WIPE TRANSITION */
 #wipe{
   position:fixed;inset:0;z-index:5000;
   background:var(--gold);
@@ -75,9 +61,7 @@ body::after{
   100%{clip-path:inset(0 0 0 100%);}
 }
 
-/* ═══════════════════════════════════════════════════════════
-   TOPBAR
-═══════════════════════════════════════════════════════════ */
+/* TOPBAR */
 #topbar{
   position:fixed;top:0;left:0;right:0;z-index:200;
   height:56px;
@@ -118,9 +102,7 @@ body::after{
 #btn-next svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2.5;transition:transform .18s;}
 #btn-next:hover svg{transform:translateX(3px);}
 
-/* ═══════════════════════════════════════════════════════════
-   HERO — city identity block
-═══════════════════════════════════════════════════════════ */
+/* HERO */
 #hero{
   padding-top:56px;
   min-height:42svh;
@@ -129,14 +111,11 @@ body::after{
   text-align:center;
   position:relative;overflow:hidden;
 }
-
-/* subtle horizontal rule lines */
 #hero::before{
   content:'';position:absolute;inset:0;pointer-events:none;
   background-image:repeating-linear-gradient(
     0deg,transparent,transparent 63px,rgba(255,255,255,0.025) 64px);
 }
-
 .hero-eyebrow{
   font-family:var(--cond);font-size:.7rem;font-weight:600;
   letter-spacing:.3em;text-transform:uppercase;
@@ -169,15 +148,12 @@ body::after{
   margin:28px auto 0;
   opacity:0;animation:fadeUp .6s var(--ease) .38s both;
 }
-
 @keyframes fadeUp{
   from{opacity:0;transform:translateY(22px);}
   to{opacity:1;transform:translateY(0);}
 }
 
-/* ═══════════════════════════════════════════════════════════
-   TRIPTYCH — three tall cards side-by-side
-═══════════════════════════════════════════════════════════ */
+/* TRIPTYCH */
 #triptych{
   display:grid;
   grid-template-columns:repeat(3,1fr);
@@ -187,7 +163,6 @@ body::after{
   border-bottom:1px solid var(--border);
   min-height:72svh;
 }
-
 .panel{
   position:relative;
   display:flex;flex-direction:column;
@@ -198,7 +173,6 @@ body::after{
 }
 .panel:hover{flex:1.18;}
 
-/* image area */
 .panel-img-wrap{
   position:relative;flex:1;overflow:hidden;
   min-height:0;
@@ -211,27 +185,22 @@ body::after{
 }
 .panel:hover .panel-img{transform:scale(1.05);filter:brightness(.88) saturate(1.05);}
 
-/* placeholder state shown while no real URL is set */
-.panel-placeholder{
+/* fallback shown when image fails */
+.panel-img-fallback{
   position:absolute;inset:0;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  gap:10px;
+  display:none;
+  align-items:center;justify-content:center;
   background:var(--surface2);
-}
-.panel-placeholder-icon{font-size:2rem;opacity:.3;}
-.panel-placeholder-label{
   font-family:var(--cond);font-size:.65rem;font-weight:600;
-  letter-spacing:.22em;text-transform:uppercase;
-  color:var(--text-dim);text-align:center;padding:0 16px;
+  letter-spacing:.2em;text-transform:uppercase;
+  color:var(--text-dim);text-align:center;padding:20px;
 }
 
-/* gradient overlay on image */
 .panel-img-wrap::after{
   content:'';position:absolute;inset:0;pointer-events:none;
   background:linear-gradient(to top,rgba(13,12,10,.92) 0%,rgba(13,12,10,.1) 55%,transparent 100%);
 }
 
-/* category pill on image */
 .panel-pill{
   position:absolute;top:20px;left:20px;z-index:2;
   padding:5px 14px;border-radius:1px;
@@ -242,14 +211,12 @@ body::after{
 .pill-culture {background:rgba(180,80,140,.9);color:#fff;}
 .pill-food    {background:rgba(200,124,47,.9); color:#0d0c0a;}
 
-/* number watermark */
 .panel-number{
   position:absolute;top:16px;right:20px;z-index:2;
   font-family:var(--cond);font-size:.62rem;font-weight:300;
   letter-spacing:.14em;color:rgba(255,255,255,.25);
 }
 
-/* text below image */
 .panel-body{
   padding:24px 22px 28px;flex-shrink:0;
   border-top:2px solid;
@@ -277,17 +244,13 @@ body::after{
   line-height:1.65;color:var(--text-mid);
 }
 
-
-/* ═══════════════════════════════════════════════════════════
-   CITY NAVIGATOR — full-width strip
-═══════════════════════════════════════════════════════════ */
+/* CITY NAVIGATOR */
 #city-nav{
   padding:40px 36px;
   display:flex;flex-wrap:wrap;gap:6px;
   justify-content:center;
   border-bottom:1px solid var(--border);
 }
-
 .city-nav-btn{
   padding:7px 16px;
   background:transparent;
@@ -304,22 +267,7 @@ body::after{
   border-color:rgba(200,146,58,.35);
 }
 
-/* ═══════════════════════════════════════════════════════════
-   FOOTER
-═══════════════════════════════════════════════════════════ */
-footer{
-  padding:32px 36px;text-align:center;
-  border-top:1px solid var(--border);
-}
-.footer-text{
-  font-family:var(--cond);font-size:.62rem;font-weight:400;
-  letter-spacing:.18em;text-transform:uppercase;
-  color:var(--text-dim);
-}
-
-/* ═══════════════════════════════════════════════════════════
-   KEYBOARD HINT
-═══════════════════════════════════════════════════════════ */
+/* KEYBOARD HINT */
 #key-hint{
   position:fixed;bottom:24px;right:24px;z-index:100;
   display:flex;gap:6px;align-items:center;
@@ -334,9 +282,7 @@ footer{
 }
 .key-label{font-family:var(--sans);font-size:.6rem;color:var(--text-dim);letter-spacing:.08em;}
 
-/* ═══════════════════════════════════════════════════════════
-   RESPONSIVE
-═══════════════════════════════════════════════════════════ */
+/* RESPONSIVE */
 @media(max-width:860px){
   #triptych{grid-template-columns:1fr;min-height:auto;}
   .panel{flex:none !important;}
@@ -356,7 +302,7 @@ footer{
 
 <div id="wipe"></div>
 
-<!-- ══════ TOP BAR ══════ -->
+<!-- TOP BAR -->
 <nav id="topbar">
   <span class="tb-brand">Global Culture Highlights</span>
   <div class="tb-sep"></div>
@@ -369,7 +315,7 @@ footer{
   </button>
 </nav>
 
-<!-- ══════ HERO ══════ -->
+<!-- HERO -->
 <section id="hero">
   <div class="hero-eyebrow">Today's Destination</div>
   <div class="hero-flag"    id="hero-flag"></div>
@@ -379,393 +325,170 @@ footer{
   <div class="hero-divider"></div>
 </section>
 
-<!-- ══════ TRIPTYCH ══════ -->
-<div id="triptych">
-  <!-- generated by JS -->
-</div>
+<!-- TRIPTYCH -->
+<div id="triptych"></div>
 
-<!-- ══════ CITY NAVIGATOR ══════ -->
-<div id="city-nav">
-  <!-- generated by JS -->
-</div>
+<!-- CITY NAVIGATOR -->
+<div id="city-nav"></div>
 
-<!-- ══════ FOOTER ══════ -->
-<footer>
-  <div class="footer-text">Global Culture Highlights &nbsp;·&nbsp; A new city every day &nbsp;·&nbsp; Use ← → arrow keys to navigate</div>
+<!-- IMPRESSUM + DATENSCHUTZ FOOTER -->
+<footer style="margin-top:50px;padding:40px 20px;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;border-top:1px solid #e0e0e0;background-color:#f9f9f9;color:#333;">
+  <div style="max-width:800px;margin:0 auto;display:flex;flex-wrap:wrap;justify-content:space-between;gap:30px;">
+
+    <div style="flex:1;min-width:250px;">
+      <h3 style="font-size:14px;text-transform:uppercase;letter-spacing:1px;margin-bottom:15px;color:#000;">Impressum</h3>
+      <p style="font-size:12px;line-height:1.6;margin:0;">
+        <strong>Mohammed Nazeer</strong><br>
+        c/o Cybex GmbH<br>
+        Riedingerstra&#223;e 18<br>
+        95448 Bayreuth, Germany<br><br>
+        <strong>Kontakt:</strong><br>
+        E-Mail: <a href="mailto:mohammed.nazeer&#64;cybex-online.com" style="color:#007bff;text-decoration:none;">mohammed.nazeer&#64;cybex-online.com</a>
+      </p>
+    </div>
+
+    <div style="flex:1;min-width:250px;">
+      <h3 style="font-size:14px;text-transform:uppercase;letter-spacing:1px;margin-bottom:15px;color:#000;">Datenschutz</h3>
+      <p style="font-size:11px;line-height:1.5;margin:0;color:#666;">
+        Diese Webseite wird &#252;ber <strong>GitHub Pages</strong> bereitgestellt. Beim Zugriff werden automatisch Server-Log-Files (u.a. IP-Adresse, Zeitpunkt) durch den Provider GitHub Inc. verarbeitet. Dies ist technisch f&#252;r die Bereitstellung der Seite erforderlich (Art.&#160;6 Abs.&#160;1 lit.&#160;f DSGVO).<br><br>
+        Informationen zur Datenverarbeitung durch GitHub finden Sie in der <a href="https://docs.github.com/en/site-policy/privacy-policies/github-privacy-statement" target="_blank" style="color:#666;text-decoration:underline;">Datenschutzerkl&#228;rung von GitHub</a>.
+      </p>
+    </div>
+
+  </div>
+  <div style="text-align:center;margin-top:30px;font-size:10px;color:#999;">
+    &copy; 2024 Mohammed Nazeer. Alle Rechte vorbehalten.
+  </div>
 </footer>
 
-<!-- ══════ IMPRESSUM ══════ -->
-<footer style="padding: 20px; text-align: center; font-family: sans-serif; font-size: 12px; color: #666; border-top: 1px solid #eee; margin-top: 50px;">
-  <h3>Impressum</h3>
-  <p><strong>Angaben gemäß § 5 DDG:</strong><br>
-  Mohammed Nazeer<br>
-  Cybex GmbH<br>
-  95448 Bayreuth</p>
-  <p><strong>Kontakt:</strong><br>
-  Telefon: +49 921 95293023<br>
-  E-Mail: mohammed.nazeer@cybex-online.com</p>
-  <p><em>Diese Seite dient ausschließlich internen Demonstrationszwecken.</em></p>
-</footer>
-
-<!-- ══════ KEYBOARD HINT ══════ -->
+<!-- KEYBOARD HINT -->
 <div id="key-hint">
-  <div class="key">←</div>
-  <div class="key">→</div>
+  <div class="key">&#8592;</div>
+  <div class="key">&#8594;</div>
   <div class="key-label">navigate cities</div>
 </div>
 
-
 <script>
+/* ── CITY DATA ── */
 const CITIES = [
   {
-    name: "Bayreuth",
-    country: "Germany",
-    flag: "🇩🇪",
-    tagline: "Bavaria's musical soul",
-    landmark: {
-      title: "Margravial Opera House",
-      image: "https://upload.wikimedia.org/wikipedia/commons/6/66/Markgr%C3%A4fliches_Opernhaus_-_Bayreuth_-_2013.jpg",
-      description: "UNESCO-listed baroque opera house"
-    },
-    culture: {
-      title: "Richard Wagner Festival",
-      image: "https://upload.wikimedia.org/wikipedia/commons/6/61/Bayreuth_Festspielhaus_2006-07-16.jpg",
-      description: "World-famous annual opera festival"
-    },
-    food: {
-      title: "Franconian Bratwurst",
-      image: "https://upload.wikimedia.org/wikipedia/commons/b/b0/German_Bratw%C3%BCrste.jpg",
-      description: "Traditional grilled sausage specialty"
-    }
+    name:"Bayreuth", country:"Germany", flag:"&#127465;&#127466;", tagline:"Bavaria's musical soul",
+    landmark:{ title:"Margravial Opera House",    image:"https://upload.wikimedia.org/wikipedia/commons/6/66/Markgr%C3%A4fliches_Opernhaus_-_Bayreuth_-_2013.jpg",          description:"UNESCO-listed baroque opera house" },
+    culture: { title:"Richard Wagner Festival",   image:"https://upload.wikimedia.org/wikipedia/commons/6/61/Bayreuth_Festspielhaus_2006-07-16.jpg",                         description:"World-famous annual opera festival" },
+    food:    { title:"Franconian Bratwurst",       image:"https://upload.wikimedia.org/wikipedia/commons/b/b0/German_Bratw%C3%BCrste.jpg",                                    description:"Traditional grilled sausage specialty" }
   },
   {
-    name: "Aarhus",
-    country: "Denmark",
-    flag: "🇩🇰",
-    tagline: "Denmark's city of smiles",
-    landmark: {
-      title: "ARoS Rainbow Panorama",
-      image: "https://www.aros.dk/media/2282/aros_at_2709_foto_anders_traerup.jpg?height=1100&widthratio=1.6410505897471899&mode=crop&center=0.51,0.70666666666666667&rnd=132116367640000000&format=webp",
-      description: "Colorful rooftop walkway"
-    },
-    culture: {
-      title: "Aarhus Festuge",
-      image: "https://www.aarhusfestuge.dk/media/e5hlgyfn/aarhus-festuge-2024-malte-bu-low-photography-80.jpg",
-      description: "Major annual cultural festival"
-    },
-    food: {
-      title: "Smørrebrød",
-      image: "https://media.wbur.org/wp/2024/06/IMG_5189-1-1000x667.jpg",
-      description: "Classic Danish open sandwich"
-    }
+    name:"Aarhus", country:"Denmark", flag:"&#127465;&#127472;", tagline:"Denmark's city of smiles",
+    landmark:{ title:"ARoS Rainbow Panorama",     image:"https://www.aros.dk/media/2282/aros_at_2709_foto_anders_traerup.jpg?height=1100&widthratio=1.6410505897471899&mode=crop&center=0.51,0.70666666666666667&rnd=132116367640000000&format=webp", description:"Colorful rooftop walkway" },
+    culture: { title:"Aarhus Festuge",             image:"https://www.aarhusfestuge.dk/media/e5hlgyfn/aarhus-festuge-2024-malte-bu-low-photography-80.jpg",                   description:"Major annual cultural festival" },
+    food:    { title:"Sm\u00f8rrebr\u00f8d",      image:"https://media.wbur.org/wp/2024/06/IMG_5189-1-1000x667.jpg",                                                          description:"Classic Danish open sandwich" }
   },
   {
-    name: "Staffordshire",
-    country: "United Kingdom",
-    flag: "🇬🇧",
-    tagline: "England's hidden county",
-    landmark: {
-      title: "Lichfield Cathedral",
-      image: "https://visitlichfield.co.uk/wp-content/uploads/2025/04/Credit20Mark20Zaccaria_2022-06-27-183232_bbys.jpg.webp",
-      description: "Historic three-spired cathedral"
-    },
-    culture: {
-      title: "English Countryside Life",
-      image: "https://assets.simpleviewinc.com/simpleview/image/upload/c_fill,f_avif,h_850,q_65,w_1750/v1/clients/staffordshire/VS_SMDC_TTD_Countryside_Mow_Cop_Castle_spectacular_views_beside_the_castle_69c34a7b-3464-4228-a3f6-47f7b47f1f5e.jpg",
-      description: "Traditional rural English lifestyle"
-    },
-    food: {
-      title: "Staffordshire Oatcake",
-      image: "https://timetocookonline.com/wp-content/uploads/2016/12/staffsoatcakes.jpg",
-      description: "Savory oat-based pancake"
-    }
+    name:"Staffordshire", country:"United Kingdom", flag:"&#127468;&#127463;", tagline:"England's hidden county",
+    landmark:{ title:"Lichfield Cathedral",        image:"https://visitlichfield.co.uk/wp-content/uploads/2025/04/Credit20Mark20Zaccaria_2022-06-27-183232_bbys.jpg.webp",   description:"Historic three-spired cathedral" },
+    culture: { title:"English Countryside Life",   image:"https://assets.simpleviewinc.com/simpleview/image/upload/c_fill,f_avif,h_850,q_65,w_1750/v1/clients/staffordshire/VS_SMDC_TTD_Countryside_Mow_Cop_Castle_spectacular_views_beside_the_castle_69c34a7b-3464-4228-a3f6-47f7b47f1f5e.jpg", description:"Traditional rural English lifestyle" },
+    food:    { title:"Staffordshire Oatcake",      image:"https://timetocookonline.com/wp-content/uploads/2016/12/staffsoatcakes.jpg",                                         description:"Savory oat-based pancake" }
   },
   {
-    name: "Stockholm",
-    country: "Sweden",
-    flag: "🇸🇪",
-    tagline: "The Venice of the North",
-    landmark: {
-      title: "Gamla Stan",
-      image: "https://www.skr.de/fileadmin/_processed_/2/b/gamla_stan_panorama_e42a428f42.jpg",
-      description: "Charming old town streets"
-    },
-    culture: {
-      title: "Midsommar Celebration",
-      image: "https://s3-eu-north-1.amazonaws.com/py3.visitsweden.com/original_images/Maypole_by_Per_Bifrost-IBSweb_f4jlm6I.jpg",
-      description: "Traditional summer festival"
-    },
-    food: {
-      title: "Köttbullar",
-      image: "https://images.services.kitchenstories.io/BntncabvNNJ8piolp_HQ-gaY9t8=/1920x0/filters:quality(85)/images.kitchenstories.io/wagtailOriginalImages/R2854-photo-final-1.jpg",
-      description: "Swedish meatballs with sauce"
-    }
+    name:"Stockholm", country:"Sweden", flag:"&#127480;&#127466;", tagline:"The Venice of the North",
+    landmark:{ title:"Gamla Stan",                 image:"https://www.skr.de/fileadmin/_processed_/2/b/gamla_stan_panorama_e42a428f42.jpg",                                   description:"Charming old town streets" },
+    culture: { title:"Midsommar Celebration",      image:"https://s3-eu-north-1.amazonaws.com/py3.visitsweden.com/original_images/Maypole_by_Per_Bifrost-IBSweb_f4jlm6I.jpg", description:"Traditional summer festival" },
+    food:    { title:"K\u00f6ttbullar",            image:"https://images.services.kitchenstories.io/BntncabvNNJ8piolp_HQ-gaY9t8=/1920x0/filters:quality(85)/images.kitchenstories.io/wagtailOriginalImages/R2854-photo-final-1.jpg", description:"Swedish meatballs with sauce" }
   },
   {
-    name: "Visakhapatnam",
-    country: "India",
-    flag: "🇮🇳",
-    tagline: "The Jewel of the East Coast",
-    landmark: {
-      title: "Rushikonda Beach",
-      image: "https://vizagtourism.org.in/images//tourist-places/rishikonda-beach-vizag/rishikonda-beach-vizag-tourism-location-address.jpg",
-      description: "Scenic coastal beach"
-    },
-    culture: {
-      title: "Kuchipudi Dance",
-      image: "https://www.odisha-tourism.org/wp-content/uploads/2023/01/Kuchipudi-dance.jpg",
-      description: "Classical dance form"
-    },
-    food: {
-      title: "Andhra Fish Curry",
-      image: "https://paattiskitchen.com/wp-content/uploads/2023/02/kmc_20230214_224559.jpg",
-      description: "Spicy regional seafood dish"
-    }
+    name:"Visakhapatnam", country:"India", flag:"&#127470;&#127475;", tagline:"The Jewel of the East Coast",
+    landmark:{ title:"Rushikonda Beach",           image:"https://vizagtourism.org.in/images//tourist-places/rishikonda-beach-vizag/rishikonda-beach-vizag-tourism-location-address.jpg", description:"Scenic coastal beach" },
+    culture: { title:"Kuchipudi Dance",            image:"https://www.odisha-tourism.org/wp-content/uploads/2023/01/Kuchipudi-dance.jpg",                                     description:"Classical dance form" },
+    food:    { title:"Andhra Fish Curry",          image:"https://paattiskitchen.com/wp-content/uploads/2023/02/kmc_20230214_224559.jpg",                                     description:"Spicy regional seafood dish" }
   },
   {
-    name: "Seinäjoki",
-    country: "Finland",
-    flag: "🇫🇮",
-    tagline: "Finland's festival heartbeat",
-    landmark: {
-      title: "Lakeuden Risti Church",
-      image: "https://visit.alvaraalto.fi/app/uploads/2024/05/seinajoki-lakeuden-risti-ar-kohde-e1a0515-1.jpg",
-      description: "Modernist church landmark"
-    },
-    culture: {
-      title: "Provinssirock Festival",
-      image: "https://www.festivalsunited.com/images/festivals/137-c2702a97593c432.jpg",
-      description: "Popular Finnish music festival"
-    },
-    food: {
-      title: "Lohikeitto",
-      image: "https://images.services.kitchenstories.io/bJWatSUUfYlSCKakl2L2iX1Jxnw=/3840x0/filters:quality(80)/images.kitchenstories.io/wagtailOriginalImages/R3115_finnische_lachssuppe_lohikeitto_title.jpg",
-      description: "Creamy salmon soup"
-    }
+    name:"Sein\u00e4joki", country:"Finland", flag:"&#127467;&#127470;", tagline:"Finland's festival heartbeat",
+    landmark:{ title:"Lakeuden Risti Church",      image:"https://visit.alvaraalto.fi/app/uploads/2024/05/seinajoki-lakeuden-risti-ar-kohde-e1a0515-1.jpg",                  description:"Modernist church landmark" },
+    culture: { title:"Provinssirock Festival",     image:"https://www.festivalsunited.com/images/festivals/137-c2702a97593c432.jpg",                                          description:"Popular Finnish music festival" },
+    food:    { title:"Lohikeitto",                 image:"https://images.services.kitchenstories.io/bJWatSUUfYlSCKakl2L2iX1Jxnw=/3840x0/filters:quality(80)/images.kitchenstories.io/wagtailOriginalImages/R3115_finnische_lachssuppe_lohikeitto_title.jpg", description:"Creamy salmon soup" }
   },
   {
-    name: "Lille",
-    country: "France",
-    flag: "🇫🇷",
-    tagline: "Flemish charm meets French flair",
-    landmark: {
-      title: "Grand Place de Lille",
-      image: "https://woody.cloudly.space/app/uploads/lille-tourisme/2023/11/thumbs/Centre-ville-de-Lille-Martin-Vangaeveren-41-min-1920x960-crop-1699524524.jpg",
-      description: "Historic city square"
-    },
-    culture: {
-      title: "La Grande Braderie",
-      image: "https://www.francebleu.fr/pikapi/images/0e1fb41a-1708-41aa-a2dc-9b19d9bce2d3/1200x680?webp=false",
-      description: "Famous flea market festival"
-    },
-    food: {
-      title: "Moules-Frites",
-      image: "https://www.seriouseats.com/thmb/s7XDnkqhu9UOCNaXZwhWulL3BNs=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/20240225-SEA-MoulesFrites-JenCausey-00-bce1c2dede8c4e27bef3552f0395928d.jpg",
-      description: "Mussels with fries"
-    }
+    name:"Lille", country:"France", flag:"&#127467;&#127479;", tagline:"Flemish charm meets French flair",
+    landmark:{ title:"Grand Place de Lille",       image:"https://woody.cloudly.space/app/uploads/lille-tourisme/2023/11/thumbs/Centre-ville-de-Lille-Martin-Vangaeveren-41-min-1920x960-crop-1699524524.jpg", description:"Historic city square" },
+    culture: { title:"La Grande Braderie",         image:"https://www.francebleu.fr/pikapi/images/0e1fb41a-1708-41aa-a2dc-9b19d9bce2d3/1200x680?webp=false",                 description:"Famous flea market festival" },
+    food:    { title:"Moules-Frites",              image:"https://www.seriouseats.com/thmb/s7XDnkqhu9UOCNaXZwhWulL3BNs=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/20240225-SEA-MoulesFrites-JenCausey-00-bce1c2dede8c4e27bef3552f0395928d.jpg", description:"Mussels with fries" }
   },
   {
-    name: "Vicenza",
-    country: "Italy",
-    flag: "🇮🇹",
-    tagline: "City of Palladio and gold",
-    landmark: {
-      title: "Basilica Palladiana",
-      image: "https://www.pedestal-eternoivica.com/uploads/images/posts/1951/col12_bas_pall-1b3a092f1aa9809344c5a6c5ea5d76f3.jpeg",
-      description: "Renaissance architectural landmark"
-    },
-    culture: {
-      title: "Teatro Olimpico",
-      image: "https://www.teatroolimpico.vicenza.it/img/home-sfondo3.jpg",
-      description: "Historic indoor theatre"
-    },
-    food: {
-      title: "Baccalà alla Vicentina",
-      image: "https://www.cucchiaio.it/content/cucchiaio/it/ricette/2016/10/baccala-alla-vicentina/jcr:content/header-par/image-single.img.jpg/1476289449480.jpg",
-      description: "Traditional cod dish"
-    }
+    name:"Vicenza", country:"Italy", flag:"&#127470;&#127481;", tagline:"City of Palladio and gold",
+    landmark:{ title:"Basilica Palladiana",        image:"https://www.pedestal-eternoivica.com/uploads/images/posts/1951/col12_bas_pall-1b3a092f1aa9809344c5a6c5ea5d76f3.jpeg", description:"Renaissance architectural landmark" },
+    culture: { title:"Teatro Olimpico",            image:"https://www.teatroolimpico.vicenza.it/img/home-sfondo3.jpg",                                                         description:"Historic indoor theatre" },
+    food:    { title:"Baccal\u00e0 alla Vicentina",image:"https://www.cucchiaio.it/content/cucchiaio/it/ricette/2016/10/baccala-alla-vicentina/jcr:content/header-par/image-single.img.jpg/1476289449480.jpg", description:"Traditional cod dish" }
   },
   {
-    name: "Barcelona",
-    country: "Spain",
-    flag: "🇪🇸",
-    tagline: "Where architecture becomes art",
-    landmark: {
-      title: "Sagrada Família",
-      image: "https://cdn.britannica.com/15/194815-050-08B5E7D1/Nativity-facade-Sagrada-Familia-cathedral-Barcelona-Spain.jpg",
-      description: "Iconic Gaudí basilica"
-    },
-    culture: {
-      title: "Castellers",
-      image: "https://www.naturaki.com/fotografies/m/66958castellers-catalunya-00-ok-online.jpg",
-      description: "Human tower tradition"
-    },
-    food: {
-      title: "Pan con Tomate",
-      image: "https://media-cdn2.greatbritishchefs.com/media/z3gn5r2n/img70865.whqc_1426x713q80.jpg",
-      description: "Bread with tomato"
-    }
+    name:"Barcelona", country:"Spain", flag:"&#127466;&#127480;", tagline:"Where architecture becomes art",
+    landmark:{ title:"Sagrada Fam\u00edlia",       image:"https://cdn.britannica.com/15/194815-050-08B5E7D1/Nativity-facade-Sagrada-Familia-cathedral-Barcelona-Spain.jpg",   description:"Iconic Gaud\u00ed basilica" },
+    culture: { title:"Castellers",                 image:"https://www.naturaki.com/fotografies/m/66958castellers-catalunya-00-ok-online.jpg",                                  description:"Human tower tradition" },
+    food:    { title:"Pan con Tomate",             image:"https://media-cdn2.greatbritishchefs.com/media/z3gn5r2n/img70865.whqc_1426x713q80.jpg",                             description:"Bread with tomato" }
   },
   {
-    name: "Zagreb",
-    country: "Croatia",
-    flag: "🇭🇷",
-    tagline: "Central Europe's warm secret",
-    landmark: {
-      title: "Zagreb Cathedral",
-      image: "https://www.zagreb.com/media/uploads/zagreb.com/2021/11/Zagreb%20Cathedral.jpg",
-      description: "Gothic cathedral landmark"
-    },
-    culture: {
-      title: "Zagreb Advent",
-      image: "https://img.24sata.hr/3boxQKDrY0mnSErlsuR774a8HhA=/1280x720/smart/media/images/2025-45/advent-zagreb-2022-j-duval.jpg",
-      description: "Award-winning Christmas market"
-    },
-    food: {
-      title: "Štrukli",
-      image: "https://feinkost-aus-kroatien.de/bilder/news/198/zagorski-strukli_preview.jpg",
-      description: "Baked dough with cheese"
-    }
+    name:"Zagreb", country:"Croatia", flag:"&#127469;&#127479;", tagline:"Central Europe's warm secret",
+    landmark:{ title:"Zagreb Cathedral",           image:"https://www.zagreb.com/media/uploads/zagreb.com/2021/11/Zagreb%20Cathedral.jpg",                                    description:"Gothic cathedral landmark" },
+    culture: { title:"Zagreb Advent",              image:"https://img.24sata.hr/3boxQKDrY0mnSErlsuR774a8HhA=/1280x720/smart/media/images/2025-45/advent-zagreb-2022-j-duval.jpg", description:"Award-winning Christmas market" },
+    food:    { title:"\u0160trukli",               image:"https://feinkost-aus-kroatien.de/bilder/news/198/zagorski-strukli_preview.jpg",                                     description:"Baked dough with cheese" }
   },
   {
-    name: "Prague",
-    country: "Czech Republic",
-    flag: "🇨🇿",
-    tagline: "The City of a Hundred Spires",
-    landmark: {
-      title: "Charles Bridge",
-      image: "https://charlesbridgehostel.com/wp-content/uploads/2016/05/bridge.jpg",
-      description: "Historic stone bridge"
-    },
-    culture: {
-      title: "Astronomical Clock",
-      image: "https://i0.wp.com/www.getreadyforadventure.com/wp-content/uploads/2024/02/astronomical-clock-in-prague-1100.webp?fit=1100%2C619&ssl=1",
-      description: "Medieval clock tower"
-    },
-    food: {
-      title: "Svíčková",
-      image: "https://cdn.administrace.tv/2022/08/06/hd/f1f13d31984ad04ed5bd24d501678a2d.jpg",
-      description: "Creamy beef dish"
-    }
+    name:"Prague", country:"Czech Republic", flag:"&#127464;&#127487;", tagline:"The City of a Hundred Spires",
+    landmark:{ title:"Charles Bridge",             image:"https://charlesbridgehostel.com/wp-content/uploads/2016/05/bridge.jpg",                                             description:"Historic stone bridge" },
+    culture: { title:"Astronomical Clock",         image:"https://i0.wp.com/www.getreadyforadventure.com/wp-content/uploads/2024/02/astronomical-clock-in-prague-1100.webp?fit=1100%2C619&ssl=1", description:"Medieval clock tower" },
+    food:    { title:"Sv\u00ed\u010dkov\u00e1",    image:"https://cdn.administrace.tv/2022/08/06/hd/f1f13d31984ad04ed5bd24d501678a2d.jpg",                                   description:"Creamy beef dish" }
   },
   {
-    name: "Łódź",
-    country: "Poland",
-    flag: "🇵🇱",
-    tagline: "Poland's creative powerhouse",
-    landmark: {
-      title: "Piotrkowska Street",
-      image: "https://static.polskieszlaki.pl/zdjecia/turystyka/2021-08/1920_1080/piotrkowska-14.jpg",
-      description: "Famous central street"
-    },
-    culture: {
-      title: "Łódź Street Art",
-      image: "https://lodz.travel/files/public/_processed_/b/c/csm_mural_przy_ulicy_Sienkiewicza_Artur_Rubinstein_fot._UML_030b41a940.jpg",
-      description: "Colorful urban murals"
-    },
-    food: {
-      title: "Żurek",
-      image: "https://cookandlove.pl/blog/wp-content/uploads/2014/11/przepis-na-%C5%BCurek.jpg",
-      description: "Sour rye soup"
-    }
+    name:"\u0141\u00f3d\u017a", country:"Poland", flag:"&#127477;&#127473;", tagline:"Poland's creative powerhouse",
+    landmark:{ title:"Piotrkowska Street",         image:"https://static.polskieszlaki.pl/zdjecia/turystyka/2021-08/1920_1080/piotrkowska-14.jpg",                            description:"Famous central street" },
+    culture: { title:"\u0141\u00f3d\u017a Street Art", image:"https://lodz.travel/files/public/_processed_/b/c/csm_mural_przy_ulicy_Sienkiewicza_Artur_Rubinstein_fot._UML_030b41a940.jpg", description:"Colorful urban murals" },
+    food:    { title:"\u017burek",                 image:"https://cookandlove.pl/blog/wp-content/uploads/2014/11/przepis-na-%C5%BCurek.jpg",                                  description:"Sour rye soup" }
   },
   {
-    name: "Ljubljana",
-    country: "Slovenia",
-    flag: "🇸🇮",
-    tagline: "The dragon's beloved city",
-    landmark: {
-      title: "Ljubljana Castle",
-      image: "https://www.visitljubljana.com/assets/PRVA-FOTOGRAFIJA__ScaleMaxWidthWzE5MDBd.jpg",
-      description: "Castle overlooking the city"
-    },
-    culture: {
-      title: "Dragon Bridge",
-      image: "https://www.barcelo.com/guia-turismo/wp-content/uploads/2025/01/puente-de-los-dragones.jpg",
-      description: "Iconic dragon statues"
-    },
-    food: {
-      title: "Potica",
-      image: "https://jernejkitchen.com/sites/default/files/potica-1-jernejkitchen.jpg",
-      description: "Traditional nut roll"
-    }
+    name:"Ljubljana", country:"Slovenia", flag:"&#127480;&#127470;", tagline:"The dragon's beloved city",
+    landmark:{ title:"Ljubljana Castle",           image:"https://www.visitljubljana.com/assets/PRVA-FOTOGRAFIJA__ScaleMaxWidthWzE5MDBd.jpg",                                 description:"Castle overlooking the city" },
+    culture: { title:"Dragon Bridge",              image:"https://www.barcelo.com/guia-turismo/wp-content/uploads/2025/01/puente-de-los-dragones.jpg",                        description:"Iconic dragon statues" },
+    food:    { title:"Potica",                     image:"https://jernejkitchen.com/sites/default/files/potica-1-jernejkitchen.jpg",                                           description:"Traditional nut roll" }
   },
   {
-    name: "Athens",
-    country: "Greece",
-    flag: "🇬🇷",
-    tagline: "Where civilisation began",
-    landmark: {
-      title: "The Acropolis",
-      image: "https://cdn-imgix.headout.com/microbrands-banner-image/image/b698f96a3bf7e35418940973f33c4708-The%20Acropolis%20of%20Athens.jpeg",
-      description: "Ancient hilltop citadel"
-    },
-    culture: {
-      title: "Greek Folk Dance",
-      image: "https://www.greece-is.com/wp-content/uploads/2017/08/Folk_Dance_050117_KAMPITI_24.jpg",
-      description: "Traditional group dance"
-    },
-    food: {
-      title: "Souvlaki",
-      image: "https://www.allrecipes.com/thmb/t9I4JgEI8-TnPcnAHV-RvQFcEFQ=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/14713-souvlaki-ddmfs-Beauty-3x4-06471d380b394255a7716405c4ec0a22.jpg",
-      description: "Grilled meat skewers"
-    }
+    name:"Athens", country:"Greece", flag:"&#127468;&#127479;", tagline:"Where civilisation began",
+    landmark:{ title:"The Acropolis",              image:"https://cdn-imgix.headout.com/microbrands-banner-image/image/b698f96a3bf7e35418940973f33c4708-The%20Acropolis%20of%20Athens.jpeg", description:"Ancient hilltop citadel" },
+    culture: { title:"Greek Folk Dance",           image:"https://www.greece-is.com/wp-content/uploads/2017/08/Folk_Dance_050117_KAMPITI_24.jpg",                             description:"Traditional group dance" },
+    food:    { title:"Souvlaki",                   image:"https://www.allrecipes.com/thmb/t9I4JgEI8-TnPcnAHV-RvQFcEFQ=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/14713-souvlaki-ddmfs-Beauty-3x4-06471d380b394255a7716405c4ec0a22.jpg", description:"Grilled meat skewers" }
   },
   {
-    name: "Bucharest",
-    country: "Romania",
-    flag: "🇷🇴",
-    tagline: "The Paris of the East",
-    landmark: {
-      title: "Palace of the Parliament",
-      image: "https://cdn-imgix.headout.com/media/images/cecb17736f8bc75d50e684c430069cba-Palace%20of%20Parliament%20Bucharest.jpg",
-      description: "Massive government building"
-    },
-    culture: {
-      title: "Lipscani Old Town",
-      image: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgGGsReubCpMpZP0ClnwHgBuNOnXPWfNa9Fd5A20h5yx58JKZeUKgXIUGw8XAi-_7Z_ZSf6jgxNdNIHG6yImpGmdgBnpBH9SBu74INptCq9uecfYKtAyQVlS75vEBChIf-d6HYpKaEVTCw/s1600/bucharest-old-downtown02-web.JPG",
-      description: "Historic city center"
-    },
-    food: {
-      title: "Mămăligă",
-      image: "https://www.lauralaurentiu.ro/wp-content/uploads/2017/11/mamaliga-pas-cu-pas-mamaliga-cum-se-face-mamaliga-video-reteta.jpg",
-      description: "Traditional cornmeal dish"
-    }
+    name:"Bucharest", country:"Romania", flag:"&#127479;&#127476;", tagline:"The Paris of the East",
+    landmark:{ title:"Palace of the Parliament",  image:"https://cdn-imgix.headout.com/media/images/cecb17736f8bc75d50e684c430069cba-Palace%20of%20Parliament%20Bucharest.jpg", description:"Massive government building" },
+    culture: { title:"Lipscani Old Town",          image:"https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgGGsReubCpMpZP0ClnwHgBuNOnXPWfNa9Fd5A20h5yx58JKZeUKgXIUGw8XAi-_7Z_ZSf6jgxNdNIHG6yImpGmdgBnpBH9SBu74INptCq9uecfYKtAyQVlS75vEBChIf-d6HYpKaEVTCw/s1600/bucharest-old-downtown02-web.JPG", description:"Historic city center" },
+    food:    { title:"M\u0103m\u0103lig\u0103",    image:"https://www.lauralaurentiu.ro/wp-content/uploads/2017/11/mamaliga-pas-cu-pas-mamaliga-cum-se-face-mamaliga-video-reteta.jpg", description:"Traditional cornmeal dish" }
   }
 ];
 
-/* ═══════════════════════════════════════════════════════════
-   STATE & HELPERS
-═══════════════════════════════════════════════════════════ */
-let currentIdx   = 0;
-let isAnimating  = false;
-const wipe       = document.getElementById('wipe');
+/* ── STATE ── */
+let currentIdx  = 0;
+let isAnimating = false;
+const wipe = document.getElementById('wipe');
 
 function getDayIndex(){
   const now   = new Date();
-  const start = new Date(now.getFullYear(),0,0);
-  return Math.floor((now-start)/86400000) % CITIES.length;
+  const start = new Date(now.getFullYear(), 0, 0);
+  return Math.floor((now - start) / 86400000) % CITIES.length;
 }
 
-
-/* ═══════════════════════════════════════════════════════════
-   RENDER
-═══════════════════════════════════════════════════════════ */
+/* ── RENDER HERO ── */
 function renderHero(c){
-  /* force re-animation by cloning + re-inserting */
   const hero = document.getElementById('hero');
-  const kids = hero.querySelectorAll('[id]');
-  kids.forEach(el => {
-    el.style.animation='none';
-    el.offsetHeight; /* reflow */
-    el.style.animation='';
+  hero.querySelectorAll('[id]').forEach(el => {
+    el.style.animation = 'none';
+    el.offsetHeight;
+    el.style.animation = '';
   });
-  document.getElementById('hero-flag').textContent    = c.flag;
-  document.getElementById('hero-city').textContent    = c.name;
+  document.getElementById('hero-flag').innerHTML    = c.flag;
+  document.getElementById('hero-city').textContent  = c.name;
   document.getElementById('hero-country').textContent = c.country;
   document.getElementById('hero-tagline').textContent = c.tagline;
 }
 
+/* ── RENDER TRIPTYCH ── */
 function renderTriptych(c, idx){
   const sections = [
     { key:'landmark', cat:'Landmark', pill:'pill-landmark', num:'01' },
@@ -773,16 +496,17 @@ function renderTriptych(c, idx){
     { key:'food',     cat:'Food',     pill:'pill-food',     num:'03' }
   ];
 
-  document.getElementById('triptych').innerHTML = sections.map((s,i)=>{
-    const sec  = c[s.key];
+  document.getElementById('triptych').innerHTML = sections.map((s, i) => {
+    const sec = c[s.key];
     return `
-      <div class="panel" style="animation:fadeUp .6s var(--ease) ${i*.1+.05}s both">
+      <div class="panel" style="animation:fadeUp .6s cubic-bezier(.4,0,.2,1) ${i * .1 + .05}s both">
         <div class="panel-img-wrap">
           <img class="panel-img"
                src="${sec.image}"
-               alt="${sec.title} — ${c.name}"
-               loading="${i===0?'eager':'lazy'}"
-               onerror="this.src='https://placehold.co/1200x800/1a1714/3a3530?text=${encodeURIComponent(sec.title)}'"/>
+               alt="${sec.title}"
+               loading="${i === 0 ? 'eager' : 'lazy'}"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+          <div class="panel-img-fallback">${sec.title}</div>
           <div class="panel-pill ${s.pill}">${s.cat}</div>
           <div class="panel-number">${s.num}</div>
         </div>
@@ -795,21 +519,27 @@ function renderTriptych(c, idx){
   }).join('');
 }
 
+/* ── RENDER NAV ── */
 function renderNav(activeIdx){
   document.getElementById('city-nav').innerHTML =
-    CITIES.map((c,i)=>`
-      <button class="city-nav-btn ${i===activeIdx?'active':''}"
-              onclick="goToCity(${i})">${c.flag} ${c.name}</button>
-    `).join('');
+    CITIES.map((c, i) => `
+      <button class="city-nav-btn ${i === activeIdx ? 'active' : ''}"
+              onclick="goToCity(${i})">
+        ${c.name}
+      </button>`).join('');
 }
 
+/* ── RENDER TOPBAR ── */
 function renderTopBar(idx){
   document.getElementById('tb-date').textContent =
-    new Date().toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short',year:'numeric'});
+    new Date().toLocaleDateString('en-GB', {
+      weekday:'short', day:'numeric', month:'short', year:'numeric'
+    });
   document.getElementById('tb-counter').textContent =
-    `City ${idx+1} of ${CITIES.length}`;
+    `${idx + 1} / ${CITIES.length}`;
 }
 
+/* ── FULL RENDER ── */
 function render(idx){
   const c = CITIES[idx];
   renderHero(c);
@@ -818,28 +548,22 @@ function render(idx){
   renderTopBar(idx);
 }
 
-/* ═══════════════════════════════════════════════════════════
-   TRANSITIONS
-═══════════════════════════════════════════════════════════ */
+/* ── TRANSITIONS ── */
 function transitionTo(idx){
   if(isAnimating || idx === currentIdx) return;
   isAnimating = true;
 
-  /* gold wipe in */
   wipe.style.clipPath = 'inset(0 100% 0 0)';
   wipe.classList.remove('back');
   wipe.classList.add('go');
 
-  setTimeout(()=>{
+  setTimeout(() => {
     currentIdx = idx;
     render(currentIdx);
-    window.scrollTo({top:0,behavior:'instant'});
-
-    /* gold wipe out */
+    window.scrollTo({ top:0, behavior:'instant' });
     wipe.classList.remove('go');
     wipe.classList.add('back');
-
-    setTimeout(()=>{
+    setTimeout(() => {
       wipe.classList.remove('back');
       isAnimating = false;
     }, 480);
@@ -847,33 +571,24 @@ function transitionTo(idx){
 }
 
 function nextCity(){
-  transitionTo((currentIdx+1) % CITIES.length);
+  transitionTo((currentIdx + 1) % CITIES.length);
 }
 
 function goToCity(idx){
   transitionTo(idx);
 }
 
-/* ═══════════════════════════════════════════════════════════
-   KEYBOARD
-═══════════════════════════════════════════════════════════ */
+/* ── KEYBOARD NAV ── */
 document.addEventListener('keydown', e => {
-  if(e.key==='ArrowRight') transitionTo((currentIdx+1) % CITIES.length);
-  if(e.key==='ArrowLeft')  transitionTo((currentIdx-1+CITIES.length) % CITIES.length);
+  if(e.key === 'ArrowRight') nextCity();
+  if(e.key === 'ArrowLeft')  transitionTo((currentIdx - 1 + CITIES.length) % CITIES.length);
 });
 
-/* ═══════════════════════════════════════════════════════════
-   INIT
-═══════════════════════════════════════════════════════════ */
-document.addEventListener('DOMContentLoaded',()=>{
+/* ── INIT ── */
+document.addEventListener('DOMContentLoaded', () => {
   currentIdx = getDayIndex();
   render(currentIdx);
 });
-
-/* re-apply fadeUp animation to triptych panels after render */
-const styleEl = document.createElement('style');
-styleEl.textContent = `@keyframes fadeUp{from{opacity:0;transform:translateY(28px);}to{opacity:1;transform:translateY(0);}}`;
-document.head.appendChild(styleEl);
 </script>
 </body>
 </html>
